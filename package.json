@@ -1,17 +1,16 @@
 {
   "name": "head-stream",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Passthrough stream for acting upon the first buffer emitted in a stream. Like the head command of e.g. head and tail, first and rest.",
   "main": "index.js",
-  "author": "max ogden",
+  "author": {
+    "name": "max ogden"
+  },
   "license": "BSD-2-Clause",
   "dependencies": {
     "through": "~2.3.4"
   },
   "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/maxogden/head-stream.git"
@@ -19,5 +18,7 @@
   "bugs": {
     "url": "https://github.com/maxogden/head-stream/issues"
   },
-  "homepage": "https://github.com/maxogden/head-stream"
+  "homepage": "https://github.com/maxogden/head-stream",
+  "readme": "# head-stream\n\nPassthrough stream for acting upon the first buffer emitted in a stream. Like the head command of e.g. head and tail, first and rest.\n\n[![NPM](https://nodei.co/npm/head-stream.png)](https://nodei.co/npm/head-stream/)\n\n### usage\n\nPipe a stream to it, as well as a callback, and that callback will be called with the first buffer like so:\n\n```\nsomeStream.pipe(headStream(onFirstRow)).pipe(someOtherStream)\n\nfunction onFirstRow(buffer, done) {\n  // do stuff with buffer\n  done() // tells head-stream to start emitting data downstream\n}\n```\n\nUntil you call `done()`, `someOtherStream` won't receive any data.\n\nYou can also pass in options:\n\n```\nvar options = {includeHead: true}\nsomeStream.pipe(headStream(onFirstRow, opts)).pipe(someOtherStream)\n```\n\n`includeHead` means that `someOtherStream` will receive all the buffers that were written to head-stream. By default the first header is not included.\n\n",
+  "readmeFilename": "readme.md"
 }
