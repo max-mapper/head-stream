@@ -15,9 +15,14 @@ function head (onHead, opts) {
     var self = this
     if (rest) return self.queue(chunk)
     self.pause()
-    onHead(chunk, function next() {
+    if (opts.includeHead) self.queue(chunk)
+    onHead(chunk, function next(err) {
+      if (err) {
+        self.resume()
+        self.emit('error', err)
+        return
+      }
       rest = true
-      if (opts.includeHead) self.queue(chunk)
       self.resume()
       if (ended) self.queue(null)
     })
