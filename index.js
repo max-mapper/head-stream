@@ -20,6 +20,7 @@ function head (onHead, opts) {
       if (err) {
         self.resume()
         self.emit('error', err)
+        self.queue(null)
         return
       }
       rest = true
