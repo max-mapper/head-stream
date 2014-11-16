@@ -10,7 +10,9 @@
   "dependencies": {
     "through": "~2.3.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "tape": "^3.0.3"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/maxogden/head-stream.git"
