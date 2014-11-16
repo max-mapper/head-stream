@@ -12,9 +12,9 @@ test('headStream(onHead)', function (t) {
   stream.write('bar')
   stream.end()
 
-  function onHead(chunk, callback) {
+  function onHead(chunk, cb) {
     t.equal(chunk, 'foo')
-    callback()
+    cb()
   }
   function onData(chunk) {
     t.equal(chunk, 'bar')
@@ -37,9 +37,9 @@ test('headStream(onHead, { includeHead: true })', function (t) {
   stream.write('bar')
   stream.end()
 
-  function onHead(chunk, callback) {
+  function onHead(chunk, cb) {
     t.equal(chunk, 'foo')
-    callback()
+    cb()
   }
   function onData(chunk) {
     t.equal(chunk, expected.shift())
@@ -63,8 +63,8 @@ test('headStream(onHead), onHead errors', function (t) {
   function onError(err) {
     t.equal(err.message, 'foobar')
   }
-  function onHead(chunk, callback) {
-    callback(new Error('foobar'))
+  function onHead(chunk, cb) {
+    cb(new Error('foobar'))
   }
   function onData(chunk) {
     t.fail('data event should not be emitted')
@@ -87,9 +87,9 @@ test('headStream(onHead), onHead errors async', function (t) {
   function onError(err) {
     t.equal(err.message, 'foobar')
   }
-  function onHead(chunk, callback) {
+  function onHead(chunk, cb) {
     setTimeout(function () {
-      callback(new Error('foobar'))
+      cb(new Error('foobar'))
     }, 10)
   }
   function onData(chunk) {
@@ -111,9 +111,9 @@ test('headStream(onHead)', function (t) {
   stream.write({ hello: 'world' })
   stream.end()
 
-  function onHead(chunk, callback) {
+  function onHead(chunk, cb) {
     t.deepEqual(chunk, { foo: 'bar' })
-    callback()
+    cb()
   }
   function onData(chunk) {
     t.deepEqual(chunk, { hello: 'world' })

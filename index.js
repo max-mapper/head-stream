@@ -11,17 +11,17 @@ function head (onHead, opts) {
   
   return stream
   
-  function write(chunk, _, callback) {
+  function write(chunk, _, cb) {
     var self = this
-    if (rest) return callback(null, chunk)
+    if (rest) return cb(null, chunk)
     onHead(chunk, function next(err) {
       if (err) {
-        callback(err)
+        cb(err)
         return
       }
       if (opts.includeHead) self.push(chunk)
       rest = true
-      callback()
+      cb()
     })
   }
 }
