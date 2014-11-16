@@ -1,4 +1,4 @@
-var through = require('through')
+var through = require('through2')
 
 module.exports = head
 
@@ -7,30 +7,21 @@ function head (onHead, opts) {
   
   var rest = false
   var ended = false
-  var stream = through(write, end)
+  var stream = through.obj(write)
   
   return stream
   
-  function write(chunk) {
+  function write(chunk, _, cb) {
     var self = this
-    if (rest) return self.queue(chunk)
-    self.pause()
+    if (rest) return cb(null, chunk)
     onHead(chunk, function next(err) {
       if (err) {
-        self.resume()
-        self.emit('error', err)
-        self.queue(null)
+        cb(err)
         return
       }
-      if (opts.includeHead) self.queue(chunk)
+      if (opts.includeHead) self.push(chunk)
       rest = true
-      self.resume()
-      if (ended) self.queue(null)
+      cb()
     })
-  }
-  
-  function end() {
-    ended = true
-    if (!this.paused) this.queue(null)
   }
 }

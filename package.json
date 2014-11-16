@@ -8,9 +8,11 @@
   },
   "license": "BSD-2-Clause",
   "dependencies": {
-    "through": "~2.3.4"
+    "through2": "^0.6.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "tape": "^3.0.3"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/maxogden/head-stream.git"
